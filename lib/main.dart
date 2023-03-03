@@ -20,24 +20,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-// Future<void> _fetchMediaUrls() async {
-  //   final mediaUrls = await parseM3u8File(widget.url);
-  //   _videoQualities = mediaUrls.map((url) {
-  //     final quality = url.split(':')[0];
-  //     final mediaUrl = url.split(':')[1];
-  //     return VideoQuality(quality: quality, url: mediaUrl);
-  //   }).toList();
-
-  //   setState(() {
-  //     if (_videoQualities.isNotEmpty) {
-  //       _selectedVideoQuality = _videoQualities[0];
-  //       _controller = VideoPlayerController.network(_selectedVideoQuality!.url)
-  //         ..initialize().then((_) {
-  //           setState(() {});
-  //           _controller.play();
-  //         });
-  //     }
-  //   });
-  // }

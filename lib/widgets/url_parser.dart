@@ -8,11 +8,11 @@ Future<List<String>> parseM3u8File(String url) async {
     final List<String> lines = body.split('\n');
     for (String line in lines) {
       if (line.startsWith('#EXT-X-STREAM-INF')) {
-        final String bandwidth = line.split('RESOLUTION=')[1].split(',')[0];
+        final String resolution = line.split('RESOLUTION=')[1].split(',')[0];
         final String mediaUrl = lines[lines.indexOf(line) + 1];
-        mediaUrls.add('$bandwidth|$mediaUrl');
+        mediaUrls.add('$resolution|$mediaUrl');
       } else if (line.isNotEmpty && !line.startsWith('#')) {
-        mediaUrls.add('quality|$line'); // add a placeholder for quality
+        mediaUrls.add('quality|$line');
       }
     }
   }

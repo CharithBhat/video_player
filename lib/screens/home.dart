@@ -18,7 +18,6 @@ class _HomeState extends State<Home> {
       body: const VideoPlayerWidget(
         url:
             'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
-        // url: 'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
       ),
     );
   }
