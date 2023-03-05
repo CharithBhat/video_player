@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -32,30 +29,17 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.dispose();
   }
 
-  Future<Map<String, dynamic>> parseMetaData(String url) async {
-    final response = await http.get(Uri.parse(url));
-    final responseBody = response.body;
-    final lines = responseBody.split('\n');
-    final metadataLine =
-        lines.firstWhere((line) => line.startsWith('#EXT-X-STREAM-INF:'));
-    final metadataString = metadataLine.substring('#EXT-X-STREAM-INF:'.length);
-    final metadataJson = jsonDecode(metadataString);
-    print(metadataJson.toString());
-    return metadataJson;
-  }
-
   Future<void> _fetchMediaUrls() async {
     final baseUri = Uri.parse(widget.url);
     List<String> mediaUrls = await parseM3u8File(widget.url);
 
     final uniqueUrls = mediaUrls.toSet().toList(); // Remove duplicates
-    _videoQualities = uniqueUrls
-        .where((url) => !url.startsWith('quality|')) // exclude placeholder
-        .map((url) {
-      final parts = url.split('|'); // split using pipe separator
-      final quality = parts[0];
 
+    _videoQualities = uniqueUrls.map((url) {
+      final parts = url.split('|');
+      final quality = parts[0];
       final mediaUrl = parts[1];
+
       final uri = Uri.parse(mediaUrl);
       final absoluteUri =
           uri.isAbsolute ? uri : baseUri.resolve(uri.toString());
@@ -101,8 +85,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             _controller =
                 VideoPlayerController.network(_selectedVideoQuality!.url);
             await _controller.initialize();
-            setState(() {});
-            _controller.play();
+            setState(() {
+              _controller.play();
+            });
           },
         ),
       ],
